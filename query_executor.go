@@ -136,6 +136,7 @@ func (q *queryExecutor) do(ctx context.Context, qry ExecutableQuery, hostIter Ne
 
 		// Process retry logic after getting an error for the query
 		if rt != nil && rt.Attempt(qry) {
+			selectedHost.Mark(nil)
 			switch rt.GetRetryType(iter.err) {
 			case Retry:
 				// retry on the same host
